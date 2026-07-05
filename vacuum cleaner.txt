@@ -1,0 +1,66 @@
+import random
+
+class SmartVacuumCleaner:
+    def __init__(self):
+        self.battery = 100
+        self.cleaned_area = 0
+        self.position = "Dock"
+        self.is_cleaning = False
+
+    def start_cleaning(self):
+        if self.battery < 20:
+            print("Battery too low. Please charge first.")
+            return
+
+        self.is_cleaning = True
+        print("Cleaning started...")
+
+        while self.battery > 20:
+            self.move()
+            self.clean()
+            self.detect_obstacle()
+
+        print("Low battery detected.")
+        self.return_to_dock()
+
+    def move(self):
+        self.position = f"Room-{random.randint(1, 5)}"
+        self.battery -= 2
+        print(f"Moving to {self.position}")
+
+    def clean(self):
+        cleaned = random.randint(1, 5)
+        self.cleaned_area += cleaned
+        self.battery -= 3
+        print(f"Cleaned {cleaned} m²")
+
+    def detect_obstacle(self):
+        if random.random() < 0.2:
+            print("Obstacle detected. Avoiding...")
+            self.battery -= 1
+
+    def return_to_dock(self):
+        self.position = "Dock"
+        self.is_cleaning = False
+        print("Returning to dock...")
+        self.charge()
+
+    def charge(self):
+        print("Charging...")
+        self.battery = 100
+        print("Battery fully charged.")
+
+    def status(self):
+        print("\n----- VACUUM STATUS -----")
+        print("Position:", self.position)
+        print("Battery:", self.battery, "%")
+        print("Cleaned Area:", self.cleaned_area, "m²")
+        print("Cleaning:", self.is_cleaning)
+        print("-------------------------")
+
+# Run program
+if __name__ == "__main__":
+    vacuum = SmartVacuumCleaner()
+    vacuum.status()
+    vacuum.start_cleaning()
+    vacuum.status()
