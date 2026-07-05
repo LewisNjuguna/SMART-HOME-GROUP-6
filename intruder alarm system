@@ -1,0 +1,48 @@
+class AntiTheftAlarm:
+    def __init__(self):
+        self.armed = False
+        self.alarm_active = False
+        self.password = "1234"
+
+    def arm_system(self):
+        self.armed = True
+        print("Security system ARMED.")
+
+    def disarm_system(self, code):
+        if code == self.password:
+            self.armed = False
+            self.alarm_active = False
+            print("Security system DISARMED.")
+        else:
+            print("Incorrect password!")
+
+    def detect_motion(self):
+        if self.armed:
+            self.trigger_alarm()
+
+    def trigger_alarm(self):
+        self.alarm_active = True
+        print("\n*** INTRUDER DETECTED! ***")
+        print("*** ALARM ACTIVATED! ***")
+        print("*** SIREN SOUNDING! ***\n")
+
+    def status(self):
+        print("\n----- SECURITY STATUS -----")
+        print("Armed:", self.armed)
+        print("Alarm Active:", self.alarm_active)
+        print("---------------------------")
+
+
+# Main Program
+alarm = AntiTheftAlarm()
+
+alarm.arm_system()
+alarm.status()
+
+print("\nMotion detected at front door...")
+alarm.detect_motion()
+
+alarm.status()
+
+alarm.disarm_system("1234")
+alarm.status()
